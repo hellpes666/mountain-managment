@@ -5,7 +5,12 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .focus-element {
-    @apply rounded-xl focus:ring-[1px] focus:ring-white focus:ring-offset-[1px] focus:outline-none p-1;
+    @apply rounded-xl p-1 ring-offset-[0.5px] focus:ring-[0.5px] focus:ring-white focus:outline-none;
+
+    transition: transform 0.2s ease;
+}
+
+.focus-element:focus {
+    transform: translate(1px, -1px);
 }
