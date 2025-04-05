@@ -1,1 +1,16 @@
 @import 'tailwindcss';
+
+body {
+    font-family: 'Arial', 'Courier New', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.focus-element {
+    @apply rounded-xl p-1 ring-offset-[0.5px] focus:ring-[0.5px] focus:ring-white focus:outline-none;
+
+    transition: transform 0.2s ease;
+}
+
+.focus-element:focus {
+    transform: translate(1px, -1px);
+}
