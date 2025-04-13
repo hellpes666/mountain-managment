@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
     return (
-        <header className="flex w-full items-center justify-between border-b-2 border-white/10 pb-2">
+        <header className="separate-bottom flex w-full items-center justify-between">
             <Link to="/" aria-label="На главную страницу" className="focus-element">
                 <CableCar color="#FFFFFF" size={32} />
             </Link>

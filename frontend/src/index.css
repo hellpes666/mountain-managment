@@ -14,3 +14,7 @@ body {
 .focus-element:focus {
     transform: translate(1px, -1px);
 }
+
+.separate-bottom {
+    @apply border-b-2 border-white/10 pb-2;
+}
