@@ -1,6 +1,6 @@
 import mongoose, { Model, Schema } from "mongoose";
 
-interface IClimber {
+export interface IClimber {
 	firstName: string;
 	lastName: string;
 	dateOfBirth: Date;
@@ -18,8 +18,6 @@ interface IClimber {
 		relationship: string;
 		phone: string;
 	};
-	createdAt?: Date;
-	updatedAt?: Date;
 }
 
 type ClimberModel = Model<IClimber>;
@@ -86,7 +84,6 @@ const ClimberSchema = new Schema<IClimber, ClimberModel>(
 	}
 );
 
-// Виртуальное поле для возраста
 ClimberSchema.virtual("age").get(function () {
 	const today = new Date();
 	const birthDate = new Date(this.dateOfBirth);
@@ -101,20 +98,7 @@ ClimberSchema.virtual("age").get(function () {
 	return age;
 });
 
-// Индекс для комбинированного поиска
-ClimberSchema.index({ firstName: 1, lastName: 1 });
-
-ClimberSchema.pre("deleteOne", async function (next) {
-	const climberId = this.getFilter()._id; 
-	if (await Expedition.exists({ climbers: climberId })) {
-	  return next(new Error("Нельзя удалить альпиниста с активными экспедициями"));
-	}
-	next();
-  });
-  
-
 export const Climber = mongoose.model<IClimber, ClimberModel>(
 	"Climber",
 	ClimberSchema
 );
-

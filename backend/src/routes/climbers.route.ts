@@ -1,6 +1,7 @@
 import express, { Router } from "express";
+import { Climbers } from "../controllers";
 
 export const climbersRouter: Router = express.Router();
 
-climbersRouter.get("/climbers");
-climbersRouter.post("/climbers");
+climbersRouter.get("", Climbers.getClimbers);
+climbersRouter.post("", Climbers.createClimber);

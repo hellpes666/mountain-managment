@@ -43,18 +43,6 @@ const MountainSchema = new Schema<IMountain, MountainModel>(
 	}
 );
 
-MountainSchema.index({ name: "text" });
-
-MountainSchema.pre("updateOne", function (next) {
-	const update = this.getUpdate() as any;
-	if (update?.expeditionsCount > 0) {
-		return next(
-			new Error("Нельзя изменять вершину с существующими восхождениями")
-		);
-	}
-	next();
-});
-
 export const Mountain = mongoose.model<IMountain, MountainModel>(
 	"Mountain",
 	MountainSchema

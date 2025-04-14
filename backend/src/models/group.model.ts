@@ -3,8 +3,6 @@ import mongoose, { Model, Schema } from "mongoose";
 interface IGroup {
 	group_name: string;
 	mountains: Array<Schema.Types.ObjectId>;
-	start_date: Date;
-	end_date: Date;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -26,20 +24,6 @@ const GroupSchema = new Schema<IGroup, GroupModel>(
 				ref: "Mountain",
 			},
 		],
-		start_date: {
-			required: [true, "Дата начала восхода обязательна"],
-			type: Date,
-			validate: {
-				validator: function (this: IGroup, value: Date) {
-					return value < this.end_date;
-				},
-				message: "Дата начала должна быть раньше даты окончания",
-			},
-		},
-		end_date: {
-			requierd: [true, "Дата окончания экспедиции горы обязательна"],
-			type: Date,
-		},
 	},
 	{
 		timestamps: true,
@@ -47,12 +31,5 @@ const GroupSchema = new Schema<IGroup, GroupModel>(
 		toObject: { virtuals: true },
 	}
 );
-
-GroupSchema.pre("deleteOne", async function(next) {
-	const groupId = this.getFilter()._id;
-	await mongoose.model("Expedition").deleteMany({ group: groupId });
-	next();
-  });
-  
 
 export const Group = mongoose.model<IGroup, GroupModel>("Group", GroupSchema);
