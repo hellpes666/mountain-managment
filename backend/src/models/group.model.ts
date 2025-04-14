@@ -3,6 +3,7 @@ import mongoose, { Model, Schema } from "mongoose";
 interface IGroup {
 	group_name: string;
 	mountains: Array<Schema.Types.ObjectId>;
+	climbers: Array<Schema.Types.ObjectId>;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -18,6 +19,12 @@ const GroupSchema = new Schema<IGroup, GroupModel>(
 			trim: true,
 			maxlength: [100, "Название не может превышать 100 символов"],
 		},
+		climbers: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Climber",
+			},
+		],
 		mountains: [
 			{
 				type: Schema.Types.ObjectId,

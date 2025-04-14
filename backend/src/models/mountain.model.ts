@@ -1,12 +1,10 @@
 import mongoose, { Model, Schema } from "mongoose";
 
-interface IMountain {
+export interface IMountain {
 	name: string;
 	height: number;
 	country: string;
 	region: string;
-	createdAt?: Date;
-	updatedAt?: Date;
 }
 
 type MountainModel = Model<IMountain>;

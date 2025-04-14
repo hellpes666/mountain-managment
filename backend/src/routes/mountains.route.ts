@@ -1,10 +1,9 @@
 import express, { Router } from "express";
+import { createMountain, getMountains } from "../controllers/mountain";
 
 export const mountainsRouter: Router = express.Router();
 
-mountainsRouter.get("/mountains");
-mountainsRouter.post("/mountains");
-mountainsRouter.put("/mountains/:mountainId");
-mountainsRouter.delete("/mountains");
+mountainsRouter.get("", getMountains);
+mountainsRouter.post("", createMountain);
 // Statistics
-mountainsRouter.get("/mountains/:mountainId/expeditions");
+mountainsRouter.get("/:mountainId/expeditions");
