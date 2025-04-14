@@ -1,7 +1,6 @@
 import mongoose, { Model, Schema } from "mongoose";
-import { Expedition } from "./expedition.mode";
 
-interface IClimber {
+export interface IClimber {
 	firstName: string;
 	lastName: string;
 	dateOfBirth: Date;
@@ -19,8 +18,6 @@ interface IClimber {
 		relationship: string;
 		phone: string;
 	};
-	createdAt?: Date;
-	updatedAt?: Date;
 }
 
 type ClimberModel = Model<IClimber>;
