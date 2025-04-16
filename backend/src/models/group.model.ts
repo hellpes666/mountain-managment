@@ -1,11 +1,9 @@
 import mongoose, { Model, Schema } from "mongoose";
 
-interface IGroup {
+export interface IGroup {
 	group_name: string;
-	mountains: Array<Schema.Types.ObjectId>;
+	mountain: Schema.Types.ObjectId;
 	climbers: Array<Schema.Types.ObjectId>;
-	createdAt?: Date;
-	updatedAt?: Date;
 }
 
 type GroupModel = Model<IGroup>;
@@ -25,12 +23,10 @@ const GroupSchema = new Schema<IGroup, GroupModel>(
 				ref: "Climber",
 			},
 		],
-		mountains: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: "Mountain",
-			},
-		],
+		mountain: {
+			type: Schema.Types.ObjectId,
+			ref: "Mountain",
+		},
 	},
 	{
 		timestamps: true,

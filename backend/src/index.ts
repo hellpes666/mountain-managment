@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import { DbConnect } from "./lib";
 import { climbersRouter } from "./routes/climbers.route";
 import { mountainsRouter } from "./routes/mountains.route";
+import { groupsRouter } from "./routes/groups.route";
+import { expeditionRouter } from "./routes/expeditions.route";
 
 dotenv.config();
 
@@ -19,6 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/climbers", climbersRouter);
 app.use("/api/mountains", mountainsRouter);
+app.use("/api/groups", groupsRouter);
+app.use("/api/expeditions", expeditionRouter);
 
 
 app.listen(PORT, () => {

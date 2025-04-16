@@ -2,7 +2,7 @@ import mongoose, { Model, Schema } from "mongoose";
 
 export type ExpeditionType = "planned" | "completed" | "cancelled";
 
-interface IExpedition {
+export interface IExpedition {
 	group_id: Schema.Types.ObjectId;
 	mountain_id: Schema.Types.ObjectId;
 	status: ExpeditionType;

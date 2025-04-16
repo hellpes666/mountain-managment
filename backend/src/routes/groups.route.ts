@@ -1,8 +1,7 @@
 import express, { Router } from "express";
+import { createGroup, getGroups } from "../controllers/group";
 
 export const groupsRouter: Router = express.Router();
 
-groupsRouter.get("/groups");
-groupsRouter.post("/groups");
-groupsRouter.put("/groups/:groupId/climbers");
-groupsRouter.delete("/groups/:groupId");
+groupsRouter.get("", getGroups);
+groupsRouter.post("", createGroup);
