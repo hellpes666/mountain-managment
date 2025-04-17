@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { handleError } from "../../lib";
 import { ValidationError } from "../error";
-import { Mountain } from "../../models/mountain.model";
 import { Group } from "../../models/group.model";
 
 export const getGroups = async (_: Request, res: Response) => {

@@ -15,7 +15,7 @@ type ExpeditionModel = Model<IExpedition>;
 const ExpeditionSchema = new Schema<IExpedition, ExpeditionModel>(
 	{
 		group_id: {
-			required: [true, "Группа обязаательна для заполнения"],
+			required: [true, "Группа обязательна для заполнения"],
 			type: Schema.Types.ObjectId,
 			ref: "Group",
 		},
@@ -27,6 +27,14 @@ const ExpeditionSchema = new Schema<IExpedition, ExpeditionModel>(
 		status: {
 			requierd: [true, "Дата окончания экспедиции горы обязательна"],
 			type: String,
+			validate: {
+				validator: function (this: IExpedition, value: ExpeditionType) {
+					return (
+						["planned", "completed", "cancelled"].indexOf(value) !==
+						-1
+					);
+				},
+			},
 		},
 		start_date: {
 			required: [true, "Дата начала восхода обязательна"],
@@ -39,7 +47,6 @@ const ExpeditionSchema = new Schema<IExpedition, ExpeditionModel>(
 			},
 		},
 		end_date: {
-			requierd: [true, "Дата окончания экспедиции горы обязательна"],
 			type: Date,
 		},
 	},
@@ -51,6 +58,6 @@ const ExpeditionSchema = new Schema<IExpedition, ExpeditionModel>(
 );
 
 export const Expedition = mongoose.model<IExpedition, ExpeditionModel>(
-	"Group",
+	"Expedition",
 	ExpeditionSchema
 );

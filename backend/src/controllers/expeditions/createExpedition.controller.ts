@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { handleError } from "../../lib";
 import { ValidationError } from "../error";
-import { Group, IGroup } from "../../models/group.model";
-import { IExpedition } from "../../models/expedition.model";
+import { Expedition, IExpedition } from "../../models/expedition.model";
 
 export const createExpedtion = async (
 	req: Request<{}, {}, IExpedition>,
@@ -31,24 +30,26 @@ export const createExpedtion = async (
 			);
 		}
 
-		const newGroup = new Group({
-			group_name,
-			climbers,
-			mountain,
+		const newExpedition = new Expedition({
+			group_id,
+			mountain_id,
+			status,
+			start_date,
+			end_date,
 		});
 
-		const validationError = newGroup.validateSync();
+		const validationError = newExpedition.validateSync();
 
 		if (validationError) {
 			throw validationError;
 		}
 
-		const savedGroup = await newGroup.save();
+		const savedExpedition = await newExpedition.save();
 
 		res.status(201).json({
-			message: "Группа успешно создана",
+			message: "Экспедиция успешно создана",
 
-			data: savedGroup.toObject({ virtuals: true }),
+			data: savedExpedition.toObject({ virtuals: true }),
 		});
 		return;
 	} catch (error) {

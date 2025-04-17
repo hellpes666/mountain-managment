@@ -9,12 +9,11 @@ export const createGroup = async (
 	res: Response
 ) => {
 	try {
-		const { group_name, climbers, mountain } = req.body;
+		const { group_name, climbers } = req.body;
 
 		const requiredFields = [
 			{ field: "group_name", value: group_name },
 			{ field: "climbers", value: climbers },
-			{ field: "mountain", value: mountain },
 		];
 
 		const missingFields = requiredFields
@@ -31,7 +30,6 @@ export const createGroup = async (
 		const newGroup = new Group({
 			group_name,
 			climbers,
-			mountain,
 		});
 
 		const validationError = newGroup.validateSync();
