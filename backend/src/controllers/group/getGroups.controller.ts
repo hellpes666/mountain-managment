@@ -5,7 +5,12 @@ import { Group } from "../../models/group.model";
 
 export const getGroups = async (_: Request, res: Response) => {
 	try {
-		const groups = await Group.find({});
+		const groups = await Group.find({})
+			.populate(
+				"climbers",
+				"firstName lastName dateOfBirth nationality email phone address emergencyContact"
+			)
+			.lean();
 
 		if (groups.length === 0) {
 			res.status(200).send({
