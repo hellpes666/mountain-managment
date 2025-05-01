@@ -33,6 +33,7 @@ const MountainSchema = new Schema<IMountain, MountainModel>(
 			required: [true, "Регион обязателен"],
 			trim: true,
 		},
+		
 	},
 	{
 		timestamps: true,
