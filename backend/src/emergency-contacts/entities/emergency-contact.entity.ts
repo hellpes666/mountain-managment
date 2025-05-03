@@ -6,8 +6,8 @@ import {
 	Model,
 	Table,
 } from 'sequelize-typescript';
-import { isValidPhone } from '../lib/isValidPhone';
-import { Climber } from './climber.entity';
+import { isValidPhone } from '../../climber/lib/isValidPhone';
+import { Climber } from '../../climber/entity/climber.entity';
 
 @Table({ tableName: 'emergency_contacts' })
 export class EmergencyContact extends Model {

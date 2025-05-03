@@ -1,6 +1,6 @@
+import { EmergencyContact } from '../../emergency-contacts/entities/emergency-contact.entity';
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { isValidPhone } from '../lib/isValidPhone';
-import { EmergencyContact } from './emegrency-contacts.entity';
 
 @Table({ tableName: 'climbers' })
 export class Climber extends Model {

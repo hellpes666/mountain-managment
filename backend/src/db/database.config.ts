@@ -1,9 +1,9 @@
 import type { SequelizeOptions } from 'sequelize-typescript';
-import { Climber } from 'src/climber/entity/climber.entity';
-import { EmergencyContact } from 'src/climber/entity/emegrency-contacts.entity';
-import { ClimbingGroup } from 'src/climbing-group/entity/climbing-group.entity';
-import { GroupMember } from 'src/climbing-group/entity/group-member.entity';
-import { Mountain } from 'src/mountain/entity/mountain.entity';
+import { Climber } from '../climber/entity/climber.entity';
+import { EmergencyContact } from '../emergency-contacts/entities/emergency-contact.entity';
+import { ClimbingGroup } from '../climbing-group/entity/climbing-group.entity';
+import { GroupMember } from '../climbing-group/entity/group-member.entity';
+import { Mountain } from '../mountain/entity/mountain.entity';
 
 export const databaseConfig: SequelizeOptions = {
 	dialect: 'postgres',
