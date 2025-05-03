@@ -1,23 +1,24 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MountainModule } from './mountain/mountain.module';
 import { ClimberModule } from './climber/climber.module';
 import { ClimbingGroupModule } from './climbing-group/climbing-group.module';
 import { GroupMemberModule } from './group-member/group-member.module';
+import { DatabaseModule } from './db/database.module';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			envFilePath: `.env`,
+			isGlobal: true,
+			envFilePath: '.env',
 		}),
+		DatabaseModule,
 		MountainModule,
 		ClimberModule,
 		ClimbingGroupModule,
 		GroupMemberModule,
 	],
-	controllers: [AppController],
-	providers: [AppService],
+	controllers: [],
+	providers: [],
 })
 export class AppModule {}

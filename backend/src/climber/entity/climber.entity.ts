@@ -1,55 +1,34 @@
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { isValidPhone } from '../lib/isValidPhone';
-import {
-	EmergencyContact,
-	IEmergencyContact,
-} from './emegrency-contacts.entity';
-
-interface ClimberCreationAttributes {
-	firstName: string;
-	lastName: string;
-	phone: string;
-	address: string;
-	emergencyContacts: IEmergencyContact[];
-}
+import { EmergencyContact } from './emegrency-contacts.entity';
 
 @Table({ tableName: 'climbers' })
-export class Climber extends Model<Climber, ClimberCreationAttributes> {
-	@Column({
-		type: DataType.INTEGER,
-		unique: true,
-		autoIncrement: true,
-		primaryKey: true,
-	})
+export class Climber extends Model {
+	@Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
 	climber_id: number;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	firstName: string;
+	@Column({ type: DataType.STRING, allowNull: false })
+	first_name: string;
+
+	@Column({ type: DataType.STRING, allowNull: false })
+	last_name: string;
 
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
-	})
-	lastName: string;
-
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-		validate: {
-			isValidPhone,
-		},
+		validate: { isValidPhone },
 	})
 	phone: string;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
+	@Column({ type: DataType.STRING, allowNull: false })
 	address: string;
 
+	@Column({ type: DataType.INTEGER, defaultValue: 0 })
+	experience_in_months: number;
+
+	@Column({ type: DataType.INTEGER, defaultValue: 0 })
+	total_successful_ascents: number;
+
 	@HasMany(() => EmergencyContact)
-	emergencyContacts: EmergencyContact[];
+	emergency_contacts: EmergencyContact[];
 }

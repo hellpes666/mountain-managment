@@ -29,6 +29,8 @@
 
 ```bash
 $ npm install
+$ docker-compose up 
+$ nest start --env-file .env
 ```
 
 ## Compile and run the project

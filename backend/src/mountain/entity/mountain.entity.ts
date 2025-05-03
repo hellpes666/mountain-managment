@@ -1,43 +1,38 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { ClimbingGroup } from 'src/climbing-group/entity/climbing-group.entity';
 
-interface MountainCreationAttributes {
-	name: string;
-	height: number; // meters
-	country: string;
-	region: string;
+enum MountainDifficulty {
+	easy = 'EASY',
+	medium = 'MEDIUM',
+	hard = 'HARD',
 }
 
 @Table({ tableName: 'mountains' })
-export class Mountain extends Model<Mountain, MountainCreationAttributes> {
-	@Column({
-		type: DataType.INTEGER,
-		unique: true,
-		autoIncrement: true,
-		primaryKey: true,
-	})
+export class Mountain extends Model {
+	@Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
 	mountain_id: number;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
+	@Column({ type: DataType.STRING, allowNull: false })
 	name: string;
 
-	@Column({
-		type: DataType.FLOAT,
-		allowNull: false,
-	})
+	@Column({ type: DataType.FLOAT, allowNull: false })
 	height: number;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
+	@Column({ type: DataType.STRING, allowNull: false })
 	country: string;
 
+	@Column({ type: DataType.STRING, allowNull: false })
+	region: string;
+
 	@Column({
-		type: DataType.STRING,
+		type: DataType.ENUM(...Object.values(MountainDifficulty)),
 		allowNull: false,
 	})
-	region: string;
+	difficulty: MountainDifficulty;
+
+	@Column({ type: DataType.INTEGER, defaultValue: 0 })
+	total_ascents: number;
+
+	@HasMany(() => ClimbingGroup)
+	climbing_groups: ClimbingGroup[];
 }

@@ -1,60 +1,52 @@
 import {
+	BelongsTo,
 	Column,
 	DataType,
 	ForeignKey,
+	HasMany,
 	Model,
 	Table,
 } from 'sequelize-typescript';
 import { Mountain } from 'src/mountain/entity/mountain.entity';
+import { GroupMember } from './group-member.entity';
 
-interface ClimbingGroupCreationAttributes {
-	group_name: string;
-	mountain_id: number;
-	start_date: Date;
-	end_date: Date;
+enum ClimbingStatus {
+	planned = 'PLANNED',
+	in_progress = 'IN PROGRESS',
+	completed = 'COMPLETED',
+	cancelled = 'CANCELLED',
 }
 
-@Table({ tableName: 'climbing-groups' })
-export class ClimbingGroup extends Model<
-	ClimbingGroup,
-	ClimbingGroupCreationAttributes
-> {
-	@Column({
-		type: DataType.INTEGER,
-		unique: true,
-		autoIncrement: true,
-		primaryKey: true,
-	})
+@Table({ tableName: 'climbing_groups' })
+export class ClimbingGroup extends Model {
+	@Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
 	climbing_group_id: number;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
+	@Column({ type: DataType.STRING, allowNull: false })
 	group_name: string;
 
-	@Column({
-		type: DataType.FLOAT,
-		allowNull: false,
-	})
-	height: number;
-
 	@ForeignKey(() => Mountain)
-	@Column({
-		type: DataType.INTEGER,
-		allowNull: false,
-	})
+	@Column({ type: DataType.INTEGER, allowNull: false })
 	mountain_id: number;
 
-	@Column({
-		type: DataType.DATE,
-		allowNull: false,
-	})
+	@BelongsTo(() => Mountain)
+	mountain: Mountain;
+
+	@Column({ type: DataType.DATE, defaultValue: null })
 	start_date: Date;
 
+	@Column({ type: DataType.DATE, defaultValue: null })
+	end_date: Date;
+
 	@Column({
-		type: DataType.DATE,
+		type: DataType.ENUM(...Object.values(ClimbingStatus)),
 		allowNull: false,
 	})
-	end_date: Date;
+	status: ClimbingStatus;
+
+	@Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
+	is_successful: boolean;
+
+	@HasMany(() => GroupMember)
+	group_members: GroupMember[];
 }
