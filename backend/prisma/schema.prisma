@@ -1,0 +1,91 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTRGES_URI")
+}
+
+model Mountain {
+    id String @id @default(uuid())
+
+    name    String
+    height  Decimal
+    country String
+    region  String?
+
+    groups Group[] @relation("group_mountain")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@index([name])
+    @@map("mountains")
+}
+
+model Group {
+    id String @id @default(uuid())
+
+    name      String
+    startDate DateTime  @map("start_date")
+    endDate   DateTime? @map("end_date")
+
+    mountain   Mountain @relation("group_mountain", fields: [mountainId], references: [id], onDelete: Cascade)
+    mountainId String   @map("mountain_id")
+
+    climbers Climber[] @relation("group_climbers")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@index([name])
+    @@map("groups")
+}
+
+model Climber {
+    id String @id @default(uuid())
+
+    fullName String @map("full_name")
+    address  String
+
+    groups            Group[]            @relation("group_climbers")
+    emergencyContacts EmergencyContact[] @relation("climber_emergency_contacts")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@index([fullName])
+    @@map("climbers")
+}
+
+model EmergencyContact {
+    id String @id @default(uuid())
+
+    fullName     String        @map("full_name")
+    relationship Relationship?
+    phoneNumber  String        @unique @map("phone_number")
+    email        String?       @unique
+    address      String
+
+    climber   Climber @relation("climber_emergency_contacts", fields: [climberId], references: [id], onDelete: Cascade)
+    climberId String  @map("climber_id")
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@index([relationship])
+    @@map("emergency_contacts")
+}
+
+enum Relationship {
+    WIFE
+    HUSBAND
+    BROTHER
+    SISTER
+    MOTHER
+    FATHER
+    GRANDMOTHER
+    GRANDFATHER
+    FRIEND
+}
