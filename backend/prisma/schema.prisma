@@ -10,8 +10,8 @@ datasource db {
 model Mountain {
     id String @id @default(uuid())
 
-    name    String
-    height  Decimal
+    name    String @unique
+    height  Float
     country String
     region  String?
 
