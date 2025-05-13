@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
     IsOptional,
     IsString,
@@ -41,10 +42,12 @@ class EndAfterStartConstraint implements ValidatorConstraintInterface {
 }
 
 export class CreateGroupDto {
+    @ApiProperty({ example: 'Экспедиция на Эверест', minLength: 4, maxLength: 32 })
     @IsString()
     @Length(4, 32)
     readonly name: string;
 
+    @ApiPropertyOptional({ example: '15-06-2025 08:00', description: 'Формат: DD-MM-YYYY HH:MM' })
     @IsString()
     @IsOptional()
     @Matches(/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}$/, {
@@ -53,6 +56,7 @@ export class CreateGroupDto {
     @Validate(MinYearConstraint)
     readonly startDate: string;
 
+    @ApiPropertyOptional({ example: '30-06-2025 18:00', description: 'Формат: DD-MM-YYYY HH:MM' })
     @IsString()
     @Matches(/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}$/, {
         message: 'Дата окончания должна соответствовать формату: DD-MM-YYYY HH:MM',
@@ -61,6 +65,7 @@ export class CreateGroupDto {
     @Validate(EndAfterStartConstraint)
     readonly endDate: string;
 
+    @ApiProperty({ example: 'a3d2c9c4-1234-4567-89ab-cdef12345678' })
     @IsUUID('4')
     readonly mountainId: string;
 }
