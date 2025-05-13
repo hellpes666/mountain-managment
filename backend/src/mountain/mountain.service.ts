@@ -108,13 +108,13 @@ export class MountainService {
     }
 
     async update(id: string, updateMountainDto: UpdateMountainDto): Promise<Mountain> {
-        const mountain = await this.findOne(id);
+        await this.findOne(id);
 
         const { name, height, country, region } = updateMountainDto;
 
         const updatedMountain = await this.prismaService.mountain.update({
             where: {
-                id: mountain.id,
+                id,
             },
             data: {
                 name,

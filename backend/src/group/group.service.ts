@@ -12,12 +12,12 @@ export class GroupService {
         private readonly mountainService: MountainService,
     ) {}
 
-    create(createGroupDto: CreateGroupDto): Promise<Group> {
+    async create(createGroupDto: CreateGroupDto): Promise<Group> {
         const { name, startDate, endDate, mountainId } = createGroupDto;
 
-        const mountain = this.mountainService.findOne(mountainId);
+        await this.mountainService.findOne(mountainId);
 
-        const group = this.prismaService.group
+        const group = await this.prismaService.group
             .create({
                 data: {
                     name,
@@ -46,6 +46,7 @@ export class GroupService {
                     select: {
                         fullName: true,
                         address: true,
+                        phoneNumber: true,
                         emergencyContacts: true,
                     },
                     orderBy: {
@@ -74,6 +75,7 @@ export class GroupService {
                     select: {
                         fullName: true,
                         address: true,
+                        phoneNumber: true,
                         emergencyContacts: true,
                     },
                     orderBy: {
@@ -91,7 +93,7 @@ export class GroupService {
     }
 
     async update(id: string, updateGroupDto: UpdateGroupDto): Promise<Group> {
-        const group = await this.findOne(id);
+        await this.findOne(id);
 
         const { name, startDate, endDate } = updateGroupDto;
 
