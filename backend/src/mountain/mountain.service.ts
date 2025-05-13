@@ -90,11 +90,10 @@ export class MountainService {
 
         const { name, height, country, region } = updateMountainDto;
 
-        await this.prismaService.mountain.update({
+        const updatedMountain = await this.prismaService.mountain.update({
             where: {
-                id,
+                id: mountain.id,
             },
-
             data: {
                 name,
                 height,
@@ -103,7 +102,7 @@ export class MountainService {
             },
         });
 
-        return mountain;
+        return updatedMountain;
     }
 
     async remove(id: string) {
