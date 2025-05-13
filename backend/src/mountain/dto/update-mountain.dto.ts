@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateMountainDto } from './create-mountain.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-
+//TODO нельзя апдейтить или удалять если есть восхождения
 export class UpdateMountainDto extends PartialType(CreateMountainDto) {
     @ApiPropertyOptional({
         description: 'Название горы',

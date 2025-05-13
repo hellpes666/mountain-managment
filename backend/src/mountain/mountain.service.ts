@@ -1,8 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, Param } from '@nestjs/common';
 import { PrismaService } from './../prisma/prisma.service';
 import { CreateMountainDto } from './dto/create-mountain.dto';
 import { UpdateMountainDto } from './dto/update-mountain.dto';
-import { Mountain } from '@prisma/client';
+import { Group, Mountain } from '@prisma/client';
 
 @Injectable()
 export class MountainService {
@@ -36,12 +36,23 @@ export class MountainService {
         const mountains = await this.prismaService.mountain.findMany({
             include: {
                 groups: {
-                    //TODO подумать над тем чтобы возвращать ещё и самих альпинистов а не только группы
                     select: {
                         id: true,
                         name: true,
                         startDate: true,
                         endDate: true,
+                        climbers: {
+                            select: {
+                                id: true,
+                                fullName: true,
+                                phoneNumber: true,
+                                address: true,
+                                emergencyContacts: true,
+                            },
+                            orderBy: {
+                                fullName: 'asc',
+                            },
+                        },
                     },
                     orderBy: {
                         startDate: 'asc',
@@ -51,7 +62,7 @@ export class MountainService {
         });
 
         if (!mountains || !mountains.length) {
-            throw new NotFoundException('Гора не была найдена');
+            throw new NotFoundException('Горы не были найдены');
         }
 
         return mountains;
@@ -62,15 +73,25 @@ export class MountainService {
             where: {
                 id,
             },
-
             include: {
                 groups: {
-                    //TODO подумать над тем чтобы возвращать ещё и самих альпинистов а не только группы
                     select: {
                         id: true,
                         name: true,
                         startDate: true,
                         endDate: true,
+                        climbers: {
+                            select: {
+                                id: true,
+                                fullName: true,
+                                phoneNumber: true,
+                                address: true,
+                                emergencyContacts: true,
+                            },
+                            orderBy: {
+                                fullName: 'asc',
+                            },
+                        },
                     },
                     orderBy: {
                         startDate: 'asc',

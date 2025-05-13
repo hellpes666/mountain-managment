@@ -10,7 +10,7 @@ datasource db {
 model Mountain {
     id String @id @default(uuid())
 
-    name    String @unique
+    name    String  @unique
     height  Float
     country String
     region  String?
@@ -27,9 +27,9 @@ model Mountain {
 model Group {
     id String @id @default(uuid())
 
-    name      String
-    startDate DateTime  @map("start_date")
-    endDate   DateTime? @map("end_date")
+    name      String  @unique
+    startDate String  @map("start_date")
+    endDate   String? @map("end_date")
 
     mountain   Mountain @relation("group_mountain", fields: [mountainId], references: [id], onDelete: Cascade)
     mountainId String   @map("mountain_id")
@@ -46,8 +46,9 @@ model Group {
 model Climber {
     id String @id @default(uuid())
 
-    fullName String @map("full_name")
-    address  String
+    fullName    String @map("full_name")
+    address     String
+    phoneNumber String @unique @map("phone_number")
 
     groups            Group[]            @relation("group_climbers")
     emergencyContacts EmergencyContact[] @relation("climber_emergency_contacts")

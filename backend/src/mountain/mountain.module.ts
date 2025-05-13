@@ -4,6 +4,7 @@ import { MountainController } from './mountain.controller';
 
 @Module({
     controllers: [MountainController],
-    providers: [MountainService],
+	providers: [MountainService],
+	exports: [MountainService]
 })
 export class MountainModule {}
