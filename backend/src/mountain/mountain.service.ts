@@ -2,12 +2,13 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 import { PrismaService } from './../prisma/prisma.service';
 import { CreateMountainDto } from './dto/create-mountain.dto';
 import { UpdateMountainDto } from './dto/update-mountain.dto';
+import { Mountain } from '@prisma/client';
 
 @Injectable()
 export class MountainService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    create(createMountainDto: CreateMountainDto) {
+    create(createMountainDto: CreateMountainDto): Promise<Mountain> {
         const { name, height, country, region } = createMountainDto;
 
         const mountain = this.prismaService.mountain
@@ -31,7 +32,7 @@ export class MountainService {
         return mountain;
     }
 
-    async findAll() {
+    async findAll(): Promise<Mountain[]> {
         const mountains = await this.prismaService.mountain.findMany({
             include: {
                 groups: {
@@ -56,7 +57,7 @@ export class MountainService {
         return mountains;
     }
 
-    async findOne(id: string) {
+    async findOne(id: string): Promise<Mountain> {
         const mountain = await this.prismaService.mountain.findUnique({
             where: {
                 id,
@@ -85,7 +86,7 @@ export class MountainService {
         return mountain;
     }
 
-    async update(id: string, updateMountainDto: UpdateMountainDto) {
+    async update(id: string, updateMountainDto: UpdateMountainDto): Promise<Mountain> {
         const mountain = await this.findOne(id);
 
         const { name, height, country, region } = updateMountainDto;
@@ -105,7 +106,7 @@ export class MountainService {
         return updatedMountain;
     }
 
-    async remove(id: string) {
+    async remove(id: string): Promise<string> {
         const mountain = await this.findOne(id);
 
         await this.prismaService.mountain.delete({
