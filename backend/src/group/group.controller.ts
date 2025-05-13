@@ -3,7 +3,6 @@ import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { ApiTags, ApiOperation, ApiParam, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { GroupEntity } from './doc/group.entity';
 
 @ApiTags('Groups')
 @Controller('groups')
@@ -13,7 +12,7 @@ export class GroupController {
     @Post()
     @ApiOperation({ summary: 'Создать новую группу' })
     @ApiBody({ type: CreateGroupDto })
-    @ApiResponse({ status: 201, description: 'Группа успешно создана', type: GroupEntity })
+    @ApiResponse({ status: 201, description: 'Группа успешно создана', type: Object })
     @ApiResponse({ status: 409, description: 'Группа с таким названием уже существует' })
     create(@Body() createGroupDto: CreateGroupDto) {
         return this.groupService.create(createGroupDto);
@@ -21,7 +20,7 @@ export class GroupController {
 
     @Get()
     @ApiOperation({ summary: 'Получить список всех групп' })
-    @ApiResponse({ status: 200, description: 'Список групп', type: GroupEntity })
+    @ApiResponse({ status: 200, description: 'Список групп', type: Object })
     @ApiResponse({ status: 404, description: 'Группы не были найдены' })
     findAll() {
         return this.groupService.findAll();
@@ -30,7 +29,7 @@ export class GroupController {
     @Get(':id')
     @ApiOperation({ summary: 'Получить одну группу по ID' })
     @ApiParam({ name: 'id', description: 'ID группы' })
-    @ApiResponse({ status: 200, description: 'Группа найдена', type: GroupEntity })
+    @ApiResponse({ status: 200, description: 'Группа найдена', type: Object })
     @ApiResponse({ status: 404, description: 'Группа не была найдена' })
     findOne(@Param('id') id: string) {
         return this.groupService.findOne(id);
@@ -40,7 +39,7 @@ export class GroupController {
     @ApiOperation({ summary: 'Обновить данные группы по ID' })
     @ApiParam({ name: 'id', description: 'ID группы' })
     @ApiBody({ type: UpdateGroupDto })
-    @ApiResponse({ status: 200, description: 'Группа успешно обновлена', type: GroupEntity })
+    @ApiResponse({ status: 200, description: 'Группа успешно обновлена', type: Object })
     @ApiResponse({ status: 404, description: 'Группа не была найдена' })
     update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
         return this.groupService.update(id, updateGroupDto);

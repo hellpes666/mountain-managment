@@ -3,7 +3,6 @@ import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/s
 import { MountainService } from './mountain.service';
 import { CreateMountainDto } from './dto/create-mountain.dto';
 import { UpdateMountainDto } from './dto/update-mountain.dto';
-import { MountainEntity } from './doc/mountain.entity';
 
 @ApiTags('Горы')
 @Controller('mountains')
@@ -29,7 +28,7 @@ export class MountainController {
     @ApiResponse({
         status: 201,
         description: 'Гора успешно создана.',
-        type: MountainEntity,
+        type: Object,
     })
     @ApiResponse({
         status: 409,
@@ -45,7 +44,7 @@ export class MountainController {
     @ApiResponse({
         status: 200,
         description: 'Успешный ответ с массивом гор и связанной информацией.',
-        type: MountainEntity,
+        type: Object,
         isArray: true,
     })
     @ApiResponse({ status: 404, description: 'Горы не найдены.' })
@@ -59,7 +58,7 @@ export class MountainController {
     @ApiResponse({
         status: 200,
         description: 'Информация о горе с группами и альпинистами.',
-        type: MountainEntity,
+        type: Object,
     })
     @ApiResponse({ status: 404, description: 'Гора не найдена.' })
     findOne(@Param('id') id: string) {
@@ -84,7 +83,7 @@ export class MountainController {
     @ApiResponse({
         status: 200,
         description: 'Данные о горе успешно обновлены.',
-        type: MountainEntity,
+        type: Object,
     })
     @ApiResponse({ status: 400, description: 'Ошибка валидации данных.' })
     @ApiResponse({ status: 404, description: 'Гора не найдена.' })
