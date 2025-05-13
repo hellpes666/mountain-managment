@@ -9,12 +9,12 @@ cd backend
 docker compose up
 ```
 
-Сверься с [[./.env.example]]
+Сверься с [./.env.example]
 
 ```bash
 npm i
 ```
 
 ```bash
-npm run sstart:dev
+npm run start:dev
 ```
