@@ -6,6 +6,7 @@ import { ClimberController } from './climber.controller';
 @Module({
     imports: [GroupModule],
     controllers: [ClimberController],
-    providers: [ClimberService],
+	providers: [ClimberService],
+	exports: [ClimberService]
 })
 export class ClimberModule {}

@@ -33,7 +33,7 @@ export class ClimberService {
             .catch((error) => {
                 // Проверяем, является ли ошибка конфликтом уникальности
                 if (error.code === 'P2002') {
-                    throw new ConflictException(`Алпинист с номером "${phoneNumber}" уже существует.`);
+                    throw new ConflictException(`Альпинист с номером "${phoneNumber}" уже существует.`);
                 }
                 // Если ошибка не о конфликте уникальности, пробрасываем её дальше
                 throw error;
@@ -86,7 +86,7 @@ export class ClimberService {
                 },
             });
             if (existingClimber) {
-                throw new ConflictException(`Алпинист с номером "${phoneNumber}" уже существует.`);
+                throw new ConflictException(`Альпинист с номером "${phoneNumber}" уже существует.`);
             }
         }
 
