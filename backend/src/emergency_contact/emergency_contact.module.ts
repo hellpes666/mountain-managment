@@ -7,5 +7,6 @@ import { EmergencyContactController } from './emergency_contact.controller';
     imports: [ClimberModule],
     controllers: [EmergencyContactController],
     providers: [EmergencyContactService],
+	exports: [EmergencyContactService]
 })
 export class EmergencyContactModule {}
