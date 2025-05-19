@@ -1,14 +1,13 @@
-import { MountainService } from '../mountain/mountain.service';
-import { GroupService } from '../group/group.service';
-import { EmergencyContactService } from '../emergency_contact/emergency_contact.service';
-import { ClimberService } from '../climber/climber.service';
-import { PrismaService } from '../prisma/prisma.service';
 import { Injectable, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { write as csvWrite } from 'fast-csv';
 import { Writable } from 'stream';
 import * as ExcelJS from 'exceljs';
 import { ExportDataCategory, ExportOutputType, ServicesType } from './types';
+import { ClimberService } from '@/climber/climber.service';
+import { EmergencyContactService } from '@/emergency_contact/emergency_contact.service';
+import { GroupService } from '@/group/group.service';
+import { MountainService } from '@/mountain/mountain.service';
 
 @Injectable()
 export class ExportDataService {
@@ -20,16 +19,64 @@ export class ExportDataService {
     };
 
     constructor(
-        private readonly prismaService: PrismaService,
         private readonly climberService: ClimberService,
         private readonly emergencyContactService: EmergencyContactService,
         private readonly groupService: GroupService,
         private readonly mountainService: MountainService,
     ) {}
 
-    private setHeaderAndCreateStream(@Res() res: Response) {
-        res.header('Content-Type', 'text/csv; charset=utf-8');
-        res.header('Content-Disposition', 'attachment; filename=climbers.csv');
+    async exportData(
+        dataCategory: ExportDataCategory,
+        exportType: ExportOutputType,
+        @Res({ passthrough: true }) res: Response,
+    ) {
+        switch (exportType) {
+            case 'csv':
+                await this.exportCsvFile(dataCategory, res);
+                break;
+            case 'excel':
+                await this.exportExcelFile(dataCategory, res);
+                break;
+            default:
+                throw new Error('Неизвестный тип экспорта');
+        }
+    }
+    private async exportCsvFile(dataCategory: ExportDataCategory, @Res() res: Response) {
+        const service = this.linkedParamNameAndService[dataCategory];
+        const data = await this[service].findAll();
+
+        const flattenItems = data.map((item) => this.flattenObject(item));
+
+        this.setHeader(dataCategory, 'csv', res);
+
+        const outputStream = this.createStreamToExportCSV(res);
+
+        csvWrite(flattenItems, { headers: true }).pipe(outputStream);
+    }
+
+    private async exportExcelFile(dataCategory: ExportDataCategory, @Res() res: Response) {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet(dataCategory);
+
+        const service = this.linkedParamNameAndService[dataCategory];
+        const data = await this[service].findAll();
+
+        const flattenItems = data.map((item) => this.flattenObject(item));
+
+        if (flattenItems.length > 0) {
+            worksheet.addRow(Object.keys(flattenItems[0]));
+        }
+
+        flattenItems.forEach((item) => {
+            worksheet.addRow(this.flattenObject(Object.values(item)));
+        });
+
+        this.setHeader(dataCategory, 'excel', res);
+
+        await workbook.xlsx.write(res);
+    }
+
+    private createStreamToExportCSV(@Res() res: Response) {
         res.write('\uFEFF');
         const stream = new Writable({
             write(chunk, encoding, callback) {
@@ -41,6 +88,20 @@ export class ExportDataService {
         });
 
         return stream;
+    }
+
+    private setHeader(dataCategory: ExportDataCategory, exportType: ExportOutputType, @Res() res: Response) {
+        switch (exportType) {
+            case 'csv':
+                res.header('Content-Type', 'text/csv; charset=utf-8');
+                res.header('Content-Disposition', `attachment; filename=${dataCategory}.csv`);
+
+                break;
+            case 'excel':
+                res.header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                res.header('Content-Disposition', `attachment; filename=${dataCategory}.xlsx`);
+                break;
+        }
     }
 
     private flattenObject(obj: any, prefix = '', result: any = {}): any {
@@ -57,35 +118,5 @@ export class ExportDataService {
             }
         }
         return result;
-	}
-	
-	 private exportCsvFile() {
-		return 1
-	}
-    private exportExcelFile() {
-		return 1
-	}
-
-    // const stream = this.setHeaderAndCreateStream(res);
-
-    // csvWrite(flatClimbers, { headers: true }).pipe(stream);
-
-    async exportData(dataCategory: ExportDataCategory, exportType: ExportOutputType, @Res() res: Response) {
-        const serviceName = this.linkedParamNameAndService[dataCategory];
-        const items = await this[serviceName].findAll();
-		const flattenItems = items.map((item) => this.flattenObject(item));
-		
-        switch (exportType) {
-            case 'csv':
-                this.exportCsvFile();
-                break;
-            case 'excel':
-                this.exportExcelFile();
-                break;
-            default:
-                throw new Error('Неизвестный тип экспорта');
-        }
     }
-
-   
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch } from '@nestjs/common';
 import { ClimberService } from './climber.service';
 import { CreateClimberDto } from './dto/create-climber.dto';
 import { UpdateClimberDto } from './dto/update-climber.dto';

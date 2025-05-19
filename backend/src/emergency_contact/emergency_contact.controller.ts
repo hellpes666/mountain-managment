@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus
 import {
     ApiTags,
     ApiOperation,
-    ApiResponse,
     ApiNotFoundResponse,
     ApiConflictResponse,
     ApiCreatedResponse,
@@ -13,7 +12,6 @@ import {
 import { EmergencyContactService } from './emergency_contact.service';
 import { CreateEmergencyContactDto } from './dto/create-emergency_contact.dto';
 import { UpdateEmergencyContactDto } from './dto/update-emergency_contact.dto';
-import { EmergencyContact } from '@prisma/client';
 
 @ApiTags('Emergency Contacts')
 @Controller('emergency-contacts')
