@@ -1,29 +1,71 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Roles } from '@/common/decorators/roles.decorator';
-import { Authorization } from './decorators/authorization.decorator';
-import { Role } from '@prisma/__generated__';
+import { type Response, type Request } from 'express';
+import {
+    ApiBadRequestResponse,
+    ApiConflictResponse,
+    ApiNotFoundResponse,
+    ApiOperation,
+    ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @ApiOperation({
+        summary: 'Создание аккаунта',
+        description: 'Создаёт новый аккаунт пользователя',
+    })
+    @ApiConflictResponse({
+        description: 'Пользователь с такой почтой уже существует',
+    })
+    @ApiBadRequestResponse({
+        description: 'Некорректные входные данные',
+    })
     @Post('register')
-    async register(dto: RegisterDto) {
-        return await this.authService.register(dto);
+    @HttpCode(HttpStatus.CREATED)
+    async register(@Res({ passthrough: true }) res: Response, @Body() dto: RegisterDto) {
+        return await this.authService.register(res, dto);
     }
 
+    @ApiOperation({
+        summary: 'Вход в аккаунт',
+        description: 'Входит в аккаунт и выдает токен доступа',
+    })
+    @ApiBadRequestResponse({
+        description: 'Некорректные входные данные',
+    })
+    @ApiNotFoundResponse({
+        description: 'Пользователь не найден',
+    })
     @Post('login')
-    async login() {
-        return 1;
+    @HttpCode(HttpStatus.OK)
+    async login(@Res({ passthrough: true }) res: Response, @Body() dto: LoginDto) {
+        return await this.authService.login(res, dto);
     }
 
-    @Get()
-    async checkAuth() {}
+    @ApiOperation({
+        summary: 'Обновление токена доступа',
+        description: 'Генерирует новый токен доступа',
+    })
+    @ApiUnauthorizedResponse({
+        description: 'Недействительныйы refresh-токен',
+    })
+    @Post('refresh')
+    @HttpCode(HttpStatus.OK)
+    async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+        return await this.authService.refresh(req, res);
+    }
 
-    @Get('profile/:id')
-    async findById(@Param('id') id: string) {
-        return await this.authService.findByIdOrEmail({ id });
+    @ApiOperation({
+        summary: 'Выход из аккаунта',
+    })
+    @Post('logout')
+    @HttpCode(HttpStatus.OK)
+    async logout(@Res({ passthrough: true }) res: Response) {
+        return await this.authService.logout(res);
     }
 }

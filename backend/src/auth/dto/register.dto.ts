@@ -1,19 +1,34 @@
-import { IsEmail, IsString, IsNotEmpty, Length } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword, MinLength } from 'class-validator';
 
 export class RegisterDto {
-    @IsEmail({}, { message: 'Некорректный адрес электронной почты' })
+    @IsEmail({}, { message: 'Введите корректный адрес электронной почты.' })
+    @IsNotEmpty({ message: 'Поле email не должно быть пустым.' })
     email: string;
 
-    @IsString({ message: 'Пароль должен быть строкой' })
-    @IsNotEmpty({ message: 'Пароль не может быть пустым' })
-    @Length(6, 20, { message: 'Пароль должен содержать от 6 до 20 символов' })
+    @IsString({ message: 'Пароль должен быть строкой.' })
+    @IsNotEmpty({ message: 'Поле password не должно быть пустым.' })
+    @IsStrongPassword(
+        {
+            minLength: 8,
+            minUppercase: 1,
+            minLowercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        },
+        {
+            message:
+                'Пароль должен содержать минимум 8 символов, одну заглавную букву, одну строчную букву, одну цифру и один специальный символ.',
+        },
+    )
     password: string;
 
-    @IsString({ message: 'Имя должно быть строкой' })
-    @IsNotEmpty({ message: 'Имя не может быть пустым' })
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(2)
     firstName: string;
 
-    @IsString({ message: 'Фамилия должна быть строкой' })
-    @IsNotEmpty({ message: 'Фамилия не может быть пустой' })
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(2)
     lastName: string;
 }
