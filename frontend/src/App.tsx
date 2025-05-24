@@ -1,9 +1,15 @@
-import Layout from './components/Layout/Layout';
+import { NavigationHeader } from './components/NavigationMenu/NavigationHeader';
+import { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 
 export const App = () => {
 	return (
-		<Layout>
-			<div className=""></div>
-		</Layout>
+		<ThemeProvider
+			defaultTheme="dark"
+			storageKey="vite-ui-theme"
+		>
+			<div className="dark bg-background min-h-svh w-full px-6 py-2 antialiased md:px-12 md:py-4 lg:px-24 lg:py-6">
+				<NavigationHeader />
+			</div>
+		</ThemeProvider>
 	);
 };
