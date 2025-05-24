@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -14,6 +12,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { DoorOpen, Settings, User } from 'lucide-react';
+import { ChangeThemeButton } from './ChangeThemeButton';
 
 const climbers: { title: string; href: string; description: string }[] = [
 	{
@@ -97,36 +96,39 @@ export function NavigationHeader() {
 			</NavigationMenu>
 
 			{/* user */}
+			<div className="flex items-center gap-6">
+				<Popover>
+					<PopoverTrigger>
+						<Avatar>
+							<AvatarImage
+								src="/example/01.png"
+								alt="avatar"
+								className="cursor-pointer"
+							/>
+							<AvatarFallback>?</AvatarFallback>
+						</Avatar>
+					</PopoverTrigger>
+					<PopoverContent
+						className="flex w-40 flex-col items-start gap-3"
+						align="end"
+					>
+						<div className="hover:bg-foreground/10 flex w-full cursor-pointer items-center gap-3 rounded p-1 duration-200">
+							<User size={16} />
+							<h3>Аккаунт</h3>
+						</div>
+						<div className="hover:bg-foreground/10 flex w-full cursor-pointer items-center gap-3 rounded p-1 duration-200">
+							<Settings size={16} />
+							<h3>Настройки</h3>
+						</div>
 
-			<Popover>
-				<PopoverTrigger>
-					<Avatar>
-						<AvatarImage
-							src="/example/01.png"
-							alt="avatar"
-							className="cursor-pointer"
-						/>
-						<AvatarFallback>?</AvatarFallback>
-					</Avatar>
-				</PopoverTrigger>
-				<PopoverContent
-					className="flex w-40 flex-col items-start gap-3"
-					align="end"
-				>
-					<div className="flex cursor-pointer items-center gap-3">
-						<User size={16} />
-						<h3>Аккаунт</h3>
-					</div>
-					<div className="mb-2 flex cursor-pointer items-center gap-3">
-						<Settings size={16} />
-						<h3>Настройки</h3>
-					</div>
-					<div className="flex cursor-pointer items-center gap-3">
-						<DoorOpen size={16} />
-						<h3>Выйти</h3>
-					</div>
-				</PopoverContent>
-			</Popover>
+						<div className="hover:bg-foreground/10 flex w-full cursor-pointer items-center gap-3 rounded p-1 duration-200">
+							<DoorOpen size={16} />
+							<h3>Выйти</h3>
+						</div>
+					</PopoverContent>
+				</Popover>
+				<ChangeThemeButton />
+			</div>
 		</div>
 	);
 }

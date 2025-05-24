@@ -7,7 +7,7 @@ export const App = () => {
 			defaultTheme="dark"
 			storageKey="vite-ui-theme"
 		>
-			<div className="dark bg-background min-h-svh w-full px-6 py-2 antialiased md:px-12 md:py-4 lg:px-24 lg:py-6">
+			<div className="bg-background min-h-svh w-full px-6 py-2 antialiased md:px-12 md:py-4 lg:px-24 lg:py-6">
 				<NavigationHeader />
 			</div>
 		</ThemeProvider>
