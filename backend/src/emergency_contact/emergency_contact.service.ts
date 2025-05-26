@@ -3,7 +3,7 @@ import { PrismaService } from './../prisma/prisma.service';
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmergencyContactDto } from './dto/create-emergency_contact.dto';
 import { UpdateEmergencyContactDto } from './dto/update-emergency_contact.dto';
-import { EmergencyContact } from '@prisma/client';
+import { EmergencyContact } from '@prisma/__generated__';
 
 @Injectable()
 export class EmergencyContactService {

@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException, Param } from '@nestjs/common';
 import { CreateMountainDto } from './dto/create-mountain.dto';
 import { UpdateMountainDto } from './dto/update-mountain.dto';
-import { Group, Mountain } from '@prisma/client';
 import { PrismaService } from '@/prisma/prisma.service';
+import { Mountain } from '@prisma/__generated__';
 
 @Injectable()
 export class MountainService {

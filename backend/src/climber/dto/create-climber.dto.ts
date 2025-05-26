@@ -46,4 +46,8 @@ export class CreateClimberDto {
     @ArrayNotEmpty()
     @IsUUID('4', { each: true })
     readonly groupIds: string[];
+
+    @IsNotEmpty()
+    @IsUUID('4')
+    readonly userId: string;
 }

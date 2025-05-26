@@ -1,13 +1,12 @@
 import { Hero } from '@/components/MainPageContent';
-import { ServiceCards } from '@/components/ServiceCards';
+import { ServiceCards } from '@/components/ServicePageContent';
 import { useUser } from '@clerk/clerk-react';
-import React from 'react';
 
 export const ServicePage = () => {
 	const { user } = useUser();
 
 	return (
-		<div className="flex w-full flex-col items-center justify-center gap-5">
+		<>
 			<Hero
 				title={
 					<>
@@ -16,10 +15,10 @@ export const ServicePage = () => {
 						{'!'}
 					</>
 				}
-				subtitle="Выберите из карточек ниже куда хотите попасть"
+				subtitle="Выберите из карточек ниже, куда хотите попасть"
 				link={false}
 			/>
 			<ServiceCards />
-		</div>
+		</>
 	);
 };

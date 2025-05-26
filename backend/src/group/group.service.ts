@@ -1,9 +1,9 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Group } from '@prisma/client';
 import { MountainService } from '@/mountain/mountain.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { Group } from '@prisma/__generated__';
 
 @Injectable()
 export class GroupService {

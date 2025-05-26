@@ -1,9 +1,9 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClimberDto } from './dto/create-climber.dto';
 import { UpdateClimberDto } from './dto/update-climber.dto';
-import { Climber } from '@prisma/client';
 import { GroupService } from '@/group/group.service';
 import { PrismaService } from '@/prisma/prisma.service';
+import { Climber } from '@prisma/__generated__';
 
 @Injectable()
 export class ClimberService {
@@ -13,7 +13,7 @@ export class ClimberService {
     ) {}
 
     async create(createClimberDto: CreateClimberDto): Promise<Climber> {
-        const { groupIds, fullName, address, phoneNumber } = createClimberDto;
+        const { groupIds, fullName, address, phoneNumber, userId } = createClimberDto;
 
         for (const groupId of groupIds) {
             await this.groupService.findOne(groupId);
@@ -22,6 +22,7 @@ export class ClimberService {
         const climber = await this.prismaService.climber
             .create({
                 data: {
+                    userId,
                     fullName,
                     address,
                     phoneNumber,

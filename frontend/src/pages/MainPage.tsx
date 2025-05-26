@@ -1,6 +1,13 @@
 import { Hero, ServicesOpportunity } from '@/components/MainPageContent';
+import { useUserRole } from '@/lib/hooks/useUserRole';
+import { Loader } from 'lucide-react';
 
 export const MainPage = () => {
+	const { role, loading } = useUserRole();
+
+	if (loading) return <Loader />;
+	if (role !== 'ADMIN') return <p>Access denied</p>;
+
 	return (
 		<>
 			<Hero

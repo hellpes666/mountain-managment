@@ -3,7 +3,7 @@ import { ClimberService } from './climber.service';
 import { CreateClimberDto } from './dto/create-climber.dto';
 import { UpdateClimberDto } from './dto/update-climber.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
-import { Climber } from '@prisma/client';
+import { Climber } from '@prisma/__generated__';
 
 @ApiTags('Альпинисты')
 @Controller('climbers')
