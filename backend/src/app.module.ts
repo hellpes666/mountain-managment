@@ -6,6 +6,7 @@ import { EmergencyContactModule } from './emergency_contact/emergency_contact.mo
 import { ExportDataModule } from './export-data/export-data.module';
 import { UserModule } from './user/user.module';
 import { Module } from '@nestjs/common';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { Module } from '@nestjs/common';
         EmergencyContactModule,
         ExportDataModule,
         UserModule,
+        AuthModule,
     ],
 })
 export class AppModule {}

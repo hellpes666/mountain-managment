@@ -1,99 +1,101 @@
 generator client {
-    provider = "prisma-client-js"
-    output   = "./__generated__"
+  provider = "prisma-client-js"
+  output   = "./__generated__"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("POSTRGES_URI")
+  provider = "postgresql"
+  url      = env("POSTRGES_URI")
 }
 
 model Mountain {
-    id        String   @id @default(uuid())
-    name      String   @unique
-    height    Float
-    country   String
-    region    String?
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
-    groups    Group[]  @relation("group_mountain")
+  id        String   @id @default(uuid())
+  name      String   @unique
+  height    Float
+  country   String
+  region    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  groups    Group[]  @relation("group_mountain")
 
-    @@index([name])
-    @@map("mountains")
+  @@index([name])
+  @@map("mountains")
 }
 
 model Group {
-    id         String    @id @default(uuid())
-    name       String    @unique
-    startDate  String    @map("start_date")
-    endDate    String?   @map("end_date")
-    mountainId String    @map("mountain_id")
-    createdAt  DateTime  @default(now()) @map("created_at")
-    updatedAt  DateTime  @updatedAt @map("updated_at")
-    mountain   Mountain  @relation("group_mountain", fields: [mountainId], references: [id], onDelete: Cascade)
-    climbers   Climber[] @relation("group_climbers")
+  id         String    @id @default(uuid())
+  name       String    @unique
+  startDate  String    @map("start_date")
+  endDate    String?   @map("end_date")
+  mountainId String    @map("mountain_id")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  mountain   Mountain  @relation("group_mountain", fields: [mountainId], references: [id], onDelete: Cascade)
+  climbers   Climber[] @relation("group_climbers")
 
-    @@index([name])
-    @@map("groups")
+  @@index([name])
+  @@map("groups")
 }
 
 model Climber {
-    id                String             @id @default(uuid())
-    fullName          String             @map("full_name")
-    address           String
-    createdAt         DateTime           @default(now()) @map("created_at")
-    updatedAt         DateTime           @updatedAt @map("updated_at")
-    phoneNumber       String             @unique @map("phone_number")
-    userId            String             @unique
-    user              User               @relation(fields: [userId], references: [id])
-    emergencyContacts EmergencyContact[] @relation("climber_emergency_contacts")
-    groups            Group[]            @relation("group_climbers")
+  id                String             @id @default(uuid())
+  fullName          String             @map("full_name")
+  address           String
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  phoneNumber       String             @unique @map("phone_number")
+  userId            String             @unique
+  user              User               @relation(fields: [userId], references: [id])
+  emergencyContacts EmergencyContact[] @relation("climber_emergency_contacts")
+  groups            Group[]            @relation("group_climbers")
 
-    @@index([fullName])
-    @@map("climbers")
+  @@index([fullName])
+  @@map("climbers")
 }
 
 model EmergencyContact {
-    id           String        @id @default(uuid())
-    fullName     String        @map("full_name")
-    relationship Relationship?
-    phoneNumber  String        @unique @map("phone_number")
-    email        String?       @unique
-    address      String
-    climberId    String        @map("climber_id")
-    createdAt    DateTime      @default(now()) @map("created_at")
-    updatedAt    DateTime      @updatedAt @map("updated_at")
-    climber      Climber       @relation("climber_emergency_contacts", fields: [climberId], references: [id], onDelete: Cascade)
+  id           String        @id @default(uuid())
+  fullName     String        @map("full_name")
+  relationship Relationship?
+  phoneNumber  String        @unique @map("phone_number")
+  email        String?       @unique
+  address      String
+  climberId    String        @map("climber_id")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  climber      Climber       @relation("climber_emergency_contacts", fields: [climberId], references: [id], onDelete: Cascade)
 
-    @@index([relationship])
-    @@map("emergency_contacts")
+  @@index([relationship])
+  @@map("emergency_contacts")
 }
 
 model User {
-    id        String   @id @default(uuid())
-    clerkId   String   @unique
-    email     String   @unique
-    role      Role     @default(USER)
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
-    climber   Climber?
+  id        String   @id @default(uuid())
+  email     String   @unique
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
+  password String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  climber   Climber?
 
-    @@map("users")
+  @@map("users")
 }
 
 enum Role {
-    ADMIN
-    USER
+  ADMIN
+  USER
 }
 
 enum Relationship {
-    WIFE
-    HUSBAND
-    BROTHER
-    SISTER
-    MOTHER
-    FATHER
-    GRANDMOTHER
-    GRANDFATHER
-    FRIEND
+  WIFE
+  HUSBAND
+  BROTHER
+  SISTER
+  MOTHER
+  FATHER
+  GRANDMOTHER
+  GRANDFATHER
+  FRIEND
 }
