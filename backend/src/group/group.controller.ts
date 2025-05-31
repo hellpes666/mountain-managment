@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { ApiTags, ApiOperation, ApiParam, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { FindByDateDto } from './dto/find-by-date.dto';
 
 @ApiTags('Groups')
 @Controller('groups')
@@ -22,8 +23,8 @@ export class GroupController {
     @ApiOperation({ summary: 'Получить список всех групп' })
     @ApiResponse({ status: 200, description: 'Список групп', type: Object })
     @ApiResponse({ status: 404, description: 'Группы не были найдены' })
-    findAll() {
-        return this.groupService.findAll();
+    findAll(@Query() params: FindByDateDto) {
+        return this.groupService.findAll(params);
     }
 
     @Get(':id')

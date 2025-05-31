@@ -4,6 +4,7 @@ import { MountainService } from '@/mountain/mountain.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group } from '@prisma/__generated__';
+import { FindByDateDto } from './dto/find-by-date.dto';
 
 @Injectable()
 export class GroupService {
@@ -38,8 +39,14 @@ export class GroupService {
         return group;
     }
 
-    async findAll(): Promise<Group[]> {
+    async findAll(params?: FindByDateDto): Promise<Group[]> {
         const groups = await this.prismaService.group.findMany({
+            where: {
+                AND: [
+                    params?.startDate ? { startDate: { gte: params.startDate } } : {},
+                    params?.endDate ? { endDate: { lte: params.endDate } } : {},
+                ],
+            },
             include: {
                 mountain: true,
                 climbers: {
