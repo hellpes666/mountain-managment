@@ -1,10 +1,8 @@
 import { Hero } from '@/components/MainPageContent';
 import { ServiceCards } from '@/components/ServicePageContent';
-import { useUser } from '@clerk/clerk-react';
 
 export const ServicePage = () => {
-	const { user } = useUser();
-
+	const user = { firstName: 'test' };
 	return (
 		<>
 			<Hero

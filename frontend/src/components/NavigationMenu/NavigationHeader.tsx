@@ -9,8 +9,8 @@ import {
 import { ChangeThemeButton } from './ChangeThemeButton';
 import { ListItem } from './ListItem';
 import { RoutesEnum, type RoutesEnumType } from '@/routes/routes';
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 
 const climbers: { title: string; href: RoutesEnumType; description: string }[] = [
 	{
@@ -98,13 +98,9 @@ export function NavigationHeader() {
 
 			{/* user */}
 			<div className="flex items-center gap-6">
-				<SignedOut>
-					<SignInButton />
-				</SignedOut>
-				<SignedIn>
-					<UserButton />
-				</SignedIn>
-
+				<Avatar>
+					<AvatarFallback>U</AvatarFallback>
+				</Avatar>
 				<ChangeThemeButton />
 			</div>
 		</div>

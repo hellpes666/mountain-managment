@@ -1,6 +1,5 @@
 import { Hero, ServicesOpportunity } from '@/components/MainPageContent';
-import { useUserRole } from '@/lib/hooks/useUserRole';
-import { Loader } from 'lucide-react';
+// import { Loader } from 'lucide-react';
 
 export const MainPage = () => {
 	// const { role, loading } = useUserRole();
