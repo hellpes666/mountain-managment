@@ -108,7 +108,7 @@ export class MountainService {
     }
 
     async update(id: string, updateMountainDto: UpdateMountainDto): Promise<Mountain> {
-        await this.findOne(id);
+        const mountain = await this.findOne(id);
 
         const { name, height, country, region } = updateMountainDto;
 

@@ -9,7 +9,7 @@ export const App = () => {
 			defaultTheme="dark"
 			storageKey="vite-ui-theme"
 		>
-			<div className="font-family-display bg-background flex min-h-svh w-full flex-col items-center gap-24 px-6 py-2 antialiased md:px-12 md:py-4 lg:px-24 lg:py-6">
+			<div className="font-family-display bg-background flex min-h-svh w-full flex-col items-center gap-12 px-6 py-2 antialiased md:px-12 md:py-4 lg:px-24 lg:py-6">
 				<NavigationHeader />
 				<Routes>
 					{RoutesAndPagesWithSecure.map(({ href, page }) => (

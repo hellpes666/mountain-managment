@@ -2,6 +2,9 @@ import type { ReactNode } from 'react';
 import { RoutesEnum, type RoutesEnumType } from '@/routes/routes';
 import { MainPage } from '@/pages/MainPage';
 import { ServicePage } from '../ServicePage';
+import { MountainsPage } from '../table-data/MountainsPage';
+import { ClimbersPage } from '../table-data/ClimbersPage';
+import { GroupsPage } from '../table-data/GroupsPage';
 
 export const RoutesAndPagesWithSecure: {
 	href: RoutesEnumType;
@@ -13,13 +16,13 @@ export const RoutesAndPagesWithSecure: {
 	// { href: RoutesEnum.MountainsExportData, secure: true, page: <ExportPage type="mountains" /> },
 	// { href: RoutesEnum.EmergencyContactsExportData, secure: true, page: <ExportPage type="emergency-contacts" /> },
 
-	// { href: RoutesEnum.Climbers, secure: false, page: <ClimbersPage /> },
+	{ href: RoutesEnum.Climbers, secure: false, page: <ClimbersPage /> },
 	// { href: RoutesEnum.ClimbersId, secure: true, page: <ClimbersPage /> },
 
-	// { href: RoutesEnum.Groups, secure: false, page: <GroupsPage /> },
+	{ href: RoutesEnum.Groups, secure: false, page: <GroupsPage /> },
 	// { href: RoutesEnum.GroupsId, secure: true, page: <GroupsPage /> },
 
-	// { href: RoutesEnum.Mountains, secure: false, page: <MountainsPage /> },
+	{ href: RoutesEnum.Mountains, secure: false, page: <MountainsPage /> },
 	// { href: RoutesEnum.MountainsId, secure: true, page: <MountainsPage /> },
 
 	// { href: RoutesEnum.Profile, secure: false, page: <ProfilePage /> },

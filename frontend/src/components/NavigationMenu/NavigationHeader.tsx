@@ -68,7 +68,7 @@ export function NavigationHeader() {
 									Просмотр данных о горах
 								</ListItem>
 								<ListItem
-									href={RoutesEnum.Mountains}
+									href={RoutesEnum.Groups}
 									title="Группы"
 								>
 									Просмотр данных о группах альпинистов
