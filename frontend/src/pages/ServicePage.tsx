@@ -1,15 +1,17 @@
 import { Hero } from '@/components/MainPageContent';
 import { ServiceCards } from '@/components/ServicePageContent';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export const ServicePage = () => {
-	const user = { firstName: 'test' };
+    const { firstName } = useAuthStore();
+    
 	return (
 		<>
 			<Hero
 				title={
 					<>
 						{'Приветствуем вас'}
-						<b className="inline">{user ? `, ${user.firstName}` : ''}</b>
+						<b className="inline">{firstName ? `, ${firstName}` : ''}</b>
 						{'!'}
 					</>
 				}

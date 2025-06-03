@@ -1,37 +1,50 @@
-import type { ReactNode } from 'react';
+import { lazy, type JSX } from 'react';
 import { RoutesEnum, type RoutesEnumType } from '@/routes/routes';
-import { MainPage } from '@/pages/MainPage';
-import { ServicePage } from '../ServicePage';
-import { MountainsPage } from '../table-data/MountainsPage';
-import { ClimbersPage } from '../table-data/ClimbersPage';
-import { GroupsPage } from '../table-data/GroupsPage';
 
 export const RoutesAndPagesWithSecure: {
 	href: RoutesEnumType;
 	secure: boolean;
-	page: ReactNode;
+	page: React.LazyExoticComponent<() => JSX.Element>;
 }[] = [
-	// { href: RoutesEnum.ClimbersExportData, secure: true, page: <ExportPage type="climbers" /> },
-	// { href: RoutesEnum.GroupsExportData, secure: true, page: <ExportPage type="groups" /> },
-	// { href: RoutesEnum.MountainsExportData, secure: true, page: <ExportPage type="mountains" /> },
-	// { href: RoutesEnum.EmergencyContactsExportData, secure: true, page: <ExportPage type="emergency-contacts" /> },
+	{
+		href: RoutesEnum.Climbers,
+		secure: false,
+		page: lazy(() => import('../table-data/ClimbersPage').then((module) => ({ default: module.ClimbersPage }))),
+	},
+	{
+		href: RoutesEnum.Groups,
+		secure: false,
+		page: lazy(() => import('../table-data/GroupsPage').then((module) => ({ default: module.GroupsPage }))),
+	},
+	{
+		href: RoutesEnum.Mountains,
+		secure: false,
+		page: lazy(() => import('../table-data/MountainsPage').then((module) => ({ default: module.MountainsPage }))),
+	},
 
-	{ href: RoutesEnum.Climbers, secure: false, page: <ClimbersPage /> },
-	// { href: RoutesEnum.ClimbersId, secure: true, page: <ClimbersPage /> },
-
-	{ href: RoutesEnum.Groups, secure: false, page: <GroupsPage /> },
-	// { href: RoutesEnum.GroupsId, secure: true, page: <GroupsPage /> },
-
-	{ href: RoutesEnum.Mountains, secure: false, page: <MountainsPage /> },
-	// { href: RoutesEnum.MountainsId, secure: true, page: <MountainsPage /> },
-
-	// { href: RoutesEnum.Profile, secure: false, page: <ProfilePage /> },
-	// { href: RoutesEnum.ProfileId, secure: true, page: <ProfilePage /> },
-
-	// { href: '/not-found' as RoutesEnumType, secure: false, page: <NotFoundPage /> },
-
-	{ href: RoutesEnum.MainPage, secure: false, page: <MainPage /> },
-	{ href: RoutesEnum.Service, secure: true, page: <ServicePage /> },
-	// { href: RoutesEnum.Login, secure: false, page: <Login /> },
-	// { href: RoutesEnum.Register, secure: false, page: <Register /> },
+	{
+		href: RoutesEnum.Profile,
+		secure: false,
+		page: lazy(() => import('@/pages/ProfilePage').then((module) => ({ default: module.ProfilePage }))),
+	},
+	{
+		href: RoutesEnum.MainPage,
+		secure: false,
+		page: lazy(() => import('@/pages/MainPage').then((module) => ({ default: module.MainPage }))),
+	},
+	{
+		href: RoutesEnum.Service,
+		secure: true,
+		page: lazy(() => import('@/pages/ServicePage').then((module) => ({ default: module.ServicePage }))),
+	},
+	{
+		href: RoutesEnum.Login,
+		secure: false,
+		page: lazy(() => import('@/pages/LoginPage').then((module) => ({ default: module.LoginPage }))),
+	},
+	{
+		href: RoutesEnum.Register,
+		secure: false,
+		page: lazy(() => import('@/pages/RegisterPage').then((module) => ({ default: module.RegisterPage }))),
+	},
 ];

@@ -1,11 +1,12 @@
 import { PrismaService } from '@/prisma/prisma.service';
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { hash, verify } from 'argon2';
 import { UserService } from '@/user/user.service';
 import { Role } from '@prisma/__generated__';
+import { type Response, type Request } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
         private readonly userService: UserService,
     ) {}
 
-    public async register(dto: RegisterDto) {
+    public async register(dto: RegisterDto, res: Response) {
         if (await this.userService.getUserByEmail(dto.email)) {
             throw new ConflictException('Некорректные данные.  Пожалуйста, попробуйте снова.');
         }
@@ -28,6 +29,7 @@ export class AuthService {
             firstName: newUserData.firstName,
             lastName: newUserData.lastName,
             role: Role.USER,
+            createdAt: new Date(),
         };
 
         const accessToken = this.jwtService.sign(payload);
@@ -38,12 +40,20 @@ export class AuthService {
             },
         });
 
+        res.cookie('access_token', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            path: '/',
+        });
+
         return {
             accessToken,
             user: payload,
         };
     }
-    public async login(dto: LoginDto) {
+    public async login(dto: LoginDto, res: Response) {
         const user = await this.userService.getUserByEmail(dto.email);
         if (!user) {
             throw new ConflictException('Некорректные данные.  Пожалуйста, попробуйте снова.');
@@ -54,13 +64,40 @@ export class AuthService {
             throw new ConflictException('Некорректные данные. Пожалуйста, попробуйте снова.');
         }
 
-        const payload = { email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role };
+        const payload = {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role,
+            createdAt: user.createdAt,
+        };
 
         const accessToken = this.jwtService.sign(payload);
+
+        res.cookie('access_token', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+            path: '/',
+        });
 
         return {
             accessToken,
             user: payload,
         };
+    }
+
+    public async checkAuth(req: Request) {
+        const token = req.cookies?.access_token;
+        if (!token) {
+            return {};
+        }
+        try {
+            const decoded = this.jwtService.verify(token);
+            return decoded;
+        } catch {
+            return {};
+        }
     }
 }
