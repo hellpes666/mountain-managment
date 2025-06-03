@@ -6,10 +6,17 @@ import { TableLayout } from '@/components/TableLayout/TableLayout';
 
 export const MountainsPage = () => {
 	return (
-		<PageLayout tableTitle={'Горы'} currentBreadcrumbPage={'Данные о горах'} exportDataItem={'Горы'}>
+		<PageLayout
+			tableTitle={'Горы'}
+			currentBreadcrumbPage={'Данные о горах'}
+			exportDataItem={'Горы'}
+			dialogTitle="Создать новую гору"
+			area="mountains"
+		>
 			<TableLayout
 				columns={mountainColumns}
 				data={mountainMockData}
+				baseUrl="/mountains/"
 			/>
 		</PageLayout>
 	);

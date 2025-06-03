@@ -9,10 +9,13 @@ export const ClimbersPage = () => {
 			tableTitle={'Альпинисты'}
 			currentBreadcrumbPage={'Данные об альпинистах'}
 			exportDataItem={'Альпинисты'}
+            dialogTitle="Внести альпиниста"
+            area="climbers"
 		>
 			<TableLayout
 				columns={climberColumns}
 				data={climberMockData}
+				baseUrl="/climbers/"
 			/>
 		</PageLayout>
 	);

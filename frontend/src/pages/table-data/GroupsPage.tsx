@@ -9,10 +9,13 @@ export const GroupsPage = () => {
 			tableTitle={'Группы'}
 			currentBreadcrumbPage={'Данные о группах'}
 			exportDataItem={'Группы'}
+			dialogTitle="Создать новую группу"
+			area="groups"
 		>
 			<TableLayout
 				columns={groupColumns}
 				data={groupMockData}
+				baseUrl="/groups/"
 			/>
 		</PageLayout>
 	);

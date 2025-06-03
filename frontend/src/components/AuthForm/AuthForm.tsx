@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/store/useAuthStore';
 import { Button } from '../ui/button';
-import { AuthWrapper } from './AuthWrapper';
+import { FormWrapper } from '../shared/FormWrapper';
 import { FormTitle } from './ui/FormTitle';
 import { FullNameFields } from './ui/FullNameFields';
 import { InputField } from './ui/InputField';
@@ -33,7 +33,7 @@ export const AuthForm: React.FC<IAuthFormProps> = ({ title, subtitle, isRegister
 	}
 
 	return (
-		<AuthWrapper>
+		<FormWrapper>
 			<form
 				className="space-y-4"
 				action={submitForm}
@@ -84,6 +84,6 @@ export const AuthForm: React.FC<IAuthFormProps> = ({ title, subtitle, isRegister
 					/>
 				)}
 			</div>
-		</AuthWrapper>
+		</FormWrapper>
 	);
 };
