@@ -50,6 +50,7 @@ export const AuthForm: React.FC<IAuthFormProps> = ({ title, subtitle, isRegister
 					id="email"
 					type="email"
 					placeholder="Введите ваш email"
+					required
 				/>
 
 				<InputField
@@ -58,6 +59,7 @@ export const AuthForm: React.FC<IAuthFormProps> = ({ title, subtitle, isRegister
 					id="password"
 					type="password"
 					placeholder="Введите ваш пароль"
+					required
 				/>
 
 				<Button

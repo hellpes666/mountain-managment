@@ -23,7 +23,7 @@ export const emergencyContactColumns = generateColumns<EmergencyContact>(emergen
 const groupKeys: (keyof Group)[] = ['id', 'name', 'startDate', 'endDate', 'createdAt'];
 export const groupColumns = generateColumns<Group>(groupKeys);
 
-const mountainKeys: (keyof Mountain)[] = ['id', 'name', 'country', 'region', 'height', 'createdAt'];
+const mountainKeys: (keyof Mountain)[] = ['name', 'country', 'region', 'height', 'createdAt'];
 export const mountainColumns = generateColumns<Mountain>(mountainKeys);
 
 const userKeys: (keyof User)[] = ['id', 'firstName', 'lastName', 'email', 'role', 'createdAt'];

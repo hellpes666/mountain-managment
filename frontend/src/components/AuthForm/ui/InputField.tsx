@@ -8,9 +8,10 @@ interface IInputFieldProps {
 	id: string;
 	type: HTMLInputTypeAttribute;
 	placeholder: string;
+	required: boolean;
 }
 
-export const InputField: FC<IInputFieldProps> = ({ htmlFor, labelName, id, type, placeholder }) => {
+export const InputField: FC<IInputFieldProps> = ({ htmlFor, labelName, id, type, placeholder, required = true }) => {
 	return (
 		<div className="space-y-2">
 			<Label htmlFor={htmlFor}>{labelName}</Label>
@@ -19,7 +20,7 @@ export const InputField: FC<IInputFieldProps> = ({ htmlFor, labelName, id, type,
 				type={type}
 				placeholder={placeholder}
 				className="focus-visible:ring-primary focus-visible:ring-2"
-				required
+				required={required}
 				name={htmlFor}
 			/>
 		</div>

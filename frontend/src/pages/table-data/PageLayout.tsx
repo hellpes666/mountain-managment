@@ -1,6 +1,4 @@
-import { InputField } from '@/components/AuthForm/ui/InputField';
 import { Hero } from '@/components/MainPageContent';
-import { FormWrapper } from '@/components/shared/FormWrapper';
 import {
 	Breadcrumb,
 	BreadcrumbList,
@@ -38,6 +36,7 @@ export const PageLayout = ({
 	currentBreadcrumbPage,
 	exportDataItem,
 	dialogTitle,
+	form,
 }: {
 	children: ReactNode;
 	tableTitle: string;
@@ -45,6 +44,7 @@ export const PageLayout = ({
 	exportDataItem: ReactNode;
 	dialogTitle: string;
 	area: Area;
+	form: ReactNode;
 }) => {
 	async function submitForm(formData: FormData) {
 		const data = {
@@ -88,7 +88,7 @@ export const PageLayout = ({
 				</Breadcrumb>
 
 				<Dialog>
-					<DialogTrigger>
+					<DialogTrigger asChild>
 						<Button>
 							<Plus />
 						</Button>
@@ -96,38 +96,7 @@ export const PageLayout = ({
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>{dialogTitle}</DialogTitle>
-							<DialogDescription>
-								<FormWrapper>
-									<form
-										className="space-y-4"
-										action={submitForm}
-									>
-										<InputField
-											htmlFor="email"
-											labelName="Email"
-											id="email"
-											type="email"
-											placeholder="Введите ваш email"
-										/>
-
-										<InputField
-											htmlFor="password"
-											labelName="Пароль"
-											id="password"
-											type="password"
-											placeholder="Введите ваш пароль"
-										/>
-
-										<Button
-											className="mt-2 w-full"
-											type="submit"
-											variant="secondary"
-										>
-											Создать
-										</Button>
-									</form>
-								</FormWrapper>
-							</DialogDescription>
+							<DialogDescription>{form}</DialogDescription>
 						</DialogHeader>
 					</DialogContent>
 				</Dialog>
