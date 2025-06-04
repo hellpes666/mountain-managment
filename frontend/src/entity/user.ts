@@ -15,3 +15,5 @@ export enum Role {
 	ADMIN = 'ADMIN',
 	USER = 'USER',
 }
+
+export type UserOption = Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>;

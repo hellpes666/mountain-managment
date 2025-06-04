@@ -8,7 +8,7 @@ const generateColumns = <T,>(keys: (keyof T)[]): ColumnDef<T>[] => {
 	}));
 };
 
-const climberKeys: (keyof Climber)[] = ['id', 'fullName', 'address', 'phoneNumber', 'createdAt'];
+const climberKeys: (keyof Climber)[] = ['fullName', 'address', 'phoneNumber'];
 export const climberColumns = generateColumns<Climber>(climberKeys);
 
 const emergencyContactKeys: (keyof EmergencyContact)[] = [
@@ -20,11 +20,11 @@ const emergencyContactKeys: (keyof EmergencyContact)[] = [
 ];
 export const emergencyContactColumns = generateColumns<EmergencyContact>(emergencyContactKeys);
 
-const groupKeys: (keyof Group)[] = ['id', 'name', 'startDate', 'endDate', 'createdAt'];
+const groupKeys: (keyof Group)[] = ['name', 'startDate', 'endDate'];
 export const groupColumns = generateColumns<Group>(groupKeys);
 
-const mountainKeys: (keyof Mountain)[] = ['name', 'country', 'region', 'height', 'createdAt'];
+const mountainKeys: (keyof Mountain)[] = ['name', 'country', 'region', 'height'];
 export const mountainColumns = generateColumns<Mountain>(mountainKeys);
 
-const userKeys: (keyof User)[] = ['id', 'firstName', 'lastName', 'email', 'role', 'createdAt'];
+const userKeys: (keyof User)[] = ['id', 'firstName', 'lastName', 'email', 'role'];
 export const userColumns = generateColumns<User>(userKeys);

@@ -2,7 +2,7 @@ import { Controller, Get, HttpCode, HttpStatus, Param, Res } from '@nestjs/commo
 import { Response } from 'express';
 import { ExportDataService } from './export-data.service';
 import { ExportDataCategory, ExportOutputType } from './types';
-// http://localhost:3000/export-data/
+
 @Controller('export-data')
 export class ExportDataController {
     constructor(private readonly exportDataService: ExportDataService) {}

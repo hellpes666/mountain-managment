@@ -61,18 +61,17 @@ export class ExportDataService {
         const service = this.linkedParamNameAndService[dataCategory];
         const data = await this[service].findAll();
 
-        const flattenItems = data.map((item) => this.flattenObject(item));
-
-        if (flattenItems.length > 0) {
-            worksheet.addRow(Object.keys(flattenItems[0]));
+        if (data.length > 0) {
+            const headers = Object.keys(this.flattenObject(data[0]));
+            worksheet.addRow(headers);
         }
 
-        flattenItems.forEach((item) => {
-            worksheet.addRow(this.flattenObject(Object.values(item)));
+        data.forEach((item) => {
+            const flatItem = this.flattenObject(item);
+            worksheet.addRow(Object.values(flatItem));
         });
 
         this.setHeader(dataCategory, 'excel', res);
-
         await workbook.xlsx.write(res);
     }
 

@@ -1,1 +1,1 @@
-export type Area = 'climbers' | 'mountains' | 'groups';
+export type Area = 'climbers' | 'mountains' | 'groups' | 'users' | 'groups';

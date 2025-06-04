@@ -1,9 +1,13 @@
 import { groupColumns } from '@/components/TableLayout/columns';
-import { groupMockData } from '@/components/TableLayout/mock';
 import { TableLayout } from '@/components/TableLayout/TableLayout';
 import { PageLayout } from './PageLayout';
+import { GroupForm } from './forms/GroupForm';
+import { TableDataApi } from '@/shared/api/TableData.api';
+import { useQuery } from '@tanstack/react-query';
+import { Spinner } from '@/shared/ui/Spinner';
 
 export const GroupsPage = () => {
+	const { data, isLoading } = useQuery(TableDataApi.getTableDataQuery('groups'));
 	return (
 		<PageLayout
 			tableTitle={'Группы'}
@@ -11,12 +15,17 @@ export const GroupsPage = () => {
 			exportDataItem={'Группы'}
 			dialogTitle="Создать новую группу"
 			area="groups"
+			form={<GroupForm />}
 		>
-			<TableLayout
-				columns={groupColumns}
-				data={groupMockData}
-				baseUrl="/groups/"
-			/>
+			{isLoading ? (
+				<Spinner text="Загружаем группы..." />
+			) : (
+				<TableLayout
+					columns={groupColumns}
+					data={data ?? []}
+					baseUrl="/groups/"
+				/>
+			)}
 		</PageLayout>
 	);
 };

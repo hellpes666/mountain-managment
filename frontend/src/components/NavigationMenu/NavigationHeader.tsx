@@ -8,36 +8,14 @@ import {
 } from '@/components/ui/navigation-menu';
 import { ChangeThemeButton } from './ChangeThemeButton';
 import { ListItem } from './ListItem';
-import { RoutesEnum, type RoutesEnumType } from '@/routes/routes';
+import { RoutesEnum } from '@/routes/routes';
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useEffect } from 'react';
 import { Skeleton } from '../Skeletons/Skeleton';
-
-const climbers: { title: string; href: RoutesEnumType; description: string }[] = [
-	{
-		title: 'Альпинисты',
-		href: RoutesEnum.ClimbersExportData,
-		description: 'Экспорт всех данных об альпинистах',
-	},
-	{
-		title: 'Группы',
-		href: RoutesEnum.GroupsExportData,
-		description: 'Экспорт всех данных о группах альпинистов',
-	},
-	{
-		title: 'Горы',
-		href: RoutesEnum.MountainsExportData,
-		description: 'Экспорт всех данных о горах',
-	},
-	{
-		title: 'Экстренные контакты',
-		href: RoutesEnum.EmergencyContactsExportData,
-		description: 'Экспорт всех данных о экстренных данных альпинистов',
-	},
-];
+import { ExportListWithDialogs } from './ExportDialog';
 
 export function NavigationHeader() {
 	const { checkAuth, isAuthorized, isLoading } = useAuthStore();
@@ -87,12 +65,18 @@ export function NavigationHeader() {
 										</Link>
 									</NavigationMenuLink>
 								</li>
-								<Link to={RoutesEnum.Mountains}>
-									<ListItem title="Горы">Просмотр данных о горах</ListItem>
-								</Link>
-								<Link to={RoutesEnum.Groups}>
-									<ListItem title="Группы">Просмотр данных о группах альпинистов</ListItem>
-								</Link>
+								<ListItem
+									title="Горы"
+									to={RoutesEnum.Mountains}
+								>
+									Просмотр данных о горах
+								</ListItem>
+								<ListItem
+									title="Группы"
+									to={RoutesEnum.Groups}
+								>
+									Просмотр данных о группах альпинистов
+								</ListItem>
 							</ul>
 						</NavigationMenuContent>
 					</NavigationMenuItem>
@@ -100,16 +84,7 @@ export function NavigationHeader() {
 						<NavigationMenuTrigger disabled={!isAuthorized}>Экспорт</NavigationMenuTrigger>
 						<NavigationMenuContent>
 							<ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-								{climbers.map((component) => (
-									<Link to={component.href}>
-										<ListItem
-											key={component.title}
-											title={component.title}
-										>
-											{component.description}
-										</ListItem>
-									</Link>
-								))}
+								<ExportListWithDialogs />
 							</ul>
 						</NavigationMenuContent>
 					</NavigationMenuItem>

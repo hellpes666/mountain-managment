@@ -9,7 +9,8 @@ import { TableDataApi } from '@/shared/api/TableData.api';
 import { Spinner } from '@/shared/ui/Spinner';
 
 export const MountainsPage = () => {
-	const { data, isLoading } = useQuery(TableDataApi.getTableDataQuery('mountains'));
+    const { data, isLoading } = useQuery(TableDataApi.getTableDataQuery('mountains'));
+    
 	return (
 		<PageLayout
 			tableTitle={'Горы'}

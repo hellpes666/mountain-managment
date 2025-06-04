@@ -1,11 +1,11 @@
-import { IsDate, IsNotEmpty, IsOptional } from "class-validator";
+import { IsDate, IsOptional } from 'class-validator';
 
 export class FindByDateDto {
-    @IsNotEmpty()
-    @IsDate()
-    startDate: string 
-    
     @IsOptional()
     @IsDate()
-    endDate?: string 
+    startDate?: string;
+
+    @IsOptional()
+    @IsDate()
+    endDate?: string;
 }

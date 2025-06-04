@@ -15,8 +15,10 @@ export class ClimberService {
     async create(createClimberDto: CreateClimberDto): Promise<Climber> {
         const { groupIds, fullName, address, phoneNumber, userId } = createClimberDto;
 
-        for (const groupId of groupIds) {
-            await this.groupService.findOne(groupId);
+        if (groupIds && groupIds.length > 0) {
+            for (const groupId of groupIds) {
+                await this.groupService.findOne(groupId);
+            }
         }
 
         const climber = await this.prismaService.climber
@@ -27,7 +29,7 @@ export class ClimberService {
                     address,
                     phoneNumber,
                     groups: {
-                        connect: groupIds.map((id) => ({ id })),
+                        connect: groupIds ? groupIds.map((id) => ({ id })) : [],
                     },
                 },
             })

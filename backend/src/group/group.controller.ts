@@ -23,7 +23,7 @@ export class GroupController {
     @ApiOperation({ summary: 'Получить список всех групп' })
     @ApiResponse({ status: 200, description: 'Список групп', type: Object })
     @ApiResponse({ status: 404, description: 'Группы не были найдены' })
-    findAll(@Query() params: FindByDateDto) {
+    findAll(@Query() params?: FindByDateDto) {
         return this.groupService.findAll(params);
     }
 

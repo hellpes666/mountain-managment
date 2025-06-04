@@ -1,6 +1,7 @@
 import { InputField } from '@/components/AuthForm/ui/InputField';
 import { FormWrapper } from '@/components/shared/FormWrapper';
 import { Button } from '@/components/ui/button';
+import type { MountainFormData } from '@/entity/mountain';
 import { TableDataApi } from '@/shared/api/TableData.api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
@@ -10,7 +11,7 @@ export const MountainForm = () => {
 	const queryClient = useQueryClient();
 
 	const mutation = useMutation({
-		mutationFn: (data: any) => TableDataApi.createChar(data, 'mountains'),
+		mutationFn: (data: MountainFormData) => TableDataApi.createChar(data, 'mountains'),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['table-data', 'mountains'] });
 
@@ -21,7 +22,7 @@ export const MountainForm = () => {
 	});
 
 	async function submitForm(formData: FormData) {
-		const data = {
+		const data: MountainFormData = {
 			name: formData.get('mountainName') as string,
 			height: Number(formData.get('mountainHeight')) as number,
 			country: formData.get('mountainCountry') as string,

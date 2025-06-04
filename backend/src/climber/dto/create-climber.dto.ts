@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length, Matches, IsUUID, ArrayNotEmpty, IsArray } from 'class-validator';
+import { IsNotEmpty, IsString, Length, Matches, IsUUID, ArrayNotEmpty, IsArray, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateClimberDto {
@@ -43,9 +43,9 @@ export class CreateClimberDto {
         minItems: 1,
     })
     @IsArray()
-    @ArrayNotEmpty()
+    @IsOptional()
     @IsUUID('4', { each: true })
-    readonly groupIds: string[];
+    readonly groupIds?: string[];
 
     @IsNotEmpty()
     @IsUUID('4')

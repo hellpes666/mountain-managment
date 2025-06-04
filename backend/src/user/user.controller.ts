@@ -6,17 +6,16 @@ import { Roles, RolesGuard } from '@/common/guards/roles.guard';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get()
-    @Roles('ADMIN')
     getAllUsers(): Promise<User[]> {
         return this.userService.getAll();
     }
 
     @Patch(':id/role')
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('ADMIN')
     updateRole(@Param('id') id: string, @Body('role') role: Role): Promise<User> {
         return this.userService.updateRole(id, role);

@@ -4,7 +4,7 @@ import type { Mountain } from './mountain';
 export interface Group {
 	id: string;
 	name: string;
-	startDate: string;
+	startDate?: string;
 	endDate?: string;
 	mountainId: string;
 	createdAt: Date;
@@ -12,3 +12,5 @@ export interface Group {
 	mountain: Mountain;
 	climbers: Climber[];
 }
+
+export type GroupOption = Pick<Group, 'name' | 'mountainId' | 'startDate' | 'endDate'>;

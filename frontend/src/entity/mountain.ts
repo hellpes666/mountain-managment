@@ -1,4 +1,4 @@
-import type { Group } from "./group";
+import type { Group } from './group';
 
 export interface Mountain {
 	id: string;
@@ -10,3 +10,5 @@ export interface Mountain {
 	updatedAt: Date;
 	groups: Group[];
 }
+
+export type MountainFormData = Omit<Mountain, 'id' | 'createdAt' | 'updatedAt' | 'groups'>;
