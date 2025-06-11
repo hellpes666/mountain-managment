@@ -23,7 +23,7 @@ export const ClimbersPage = () => {
 				<TableLayout
 					columns={climberColumns}
 					data={data ?? []}
-					baseUrl="/climbers/"
+					baseUrl="/climbers"
 				/>
 			)}
 		</PageLayout>

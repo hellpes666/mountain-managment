@@ -50,20 +50,20 @@ export const TableLayout = <TData, TValue>({ data, columns, baseUrl }: TableLayo
 				</TableHeader>
 				<TableBody>
 					{table.getRowModel().rows?.length ? (
-						table.getRowModel().rows.map((row, rowIndex) => {
+						table.getRowModel().rows.map((row, _) => {
 							return (
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && 'selected'}
 									className="hover:bg-muted cursor-pointer transition-colors"
 								>
-									{row.getVisibleCells().map((cell, i, arr) => (
+									{row.getVisibleCells().map((cell, _, __) => (
 										<TableCell
 											key={cell.id}
 											className={`p-4`}
 										>
 											<Link
-												to={`/${baseUrl}/${row.original.id}`}
+												to={`${baseUrl}/${row.original.id}`}
 												className="block h-full w-full text-inherit"
 												style={{ textDecoration: 'none' }}
 											>

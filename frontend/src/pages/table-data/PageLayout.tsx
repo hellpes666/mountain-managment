@@ -46,11 +46,6 @@ export const PageLayout = ({
 	area: Area;
 	form: ReactNode;
 }) => {
-	async function submitForm(formData: FormData) {
-		const data = {
-			email: formData.get('email') as string,
-		};
-	}
 	return (
 		<div className="flex w-full flex-col justify-start gap-12">
 			<Hero

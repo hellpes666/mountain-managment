@@ -1,4 +1,4 @@
-import type { User } from './user';
+import type { EmergencyContact } from './emergencyContact';
 
 export interface Climber {
 	id: string;
@@ -8,9 +8,7 @@ export interface Climber {
 	updatedAt: Date;
 	phoneNumber: string;
 	userId: string;
-	user: User;
-	emergencyContactsIds: string[];
-	groupIds: string[];
+	emergencyContacts: EmergencyContact[];
 }
 
 export type ClimberFormData = Omit<Climber, 'id' | 'createdAt' | 'updatedAt' | 'emergencyContactsIds' | 'user'>;

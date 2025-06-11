@@ -20,7 +20,6 @@ export const TableDataApi = {
 			queryKey: ['table-data', area],
 			queryFn: async () => {
 				const res = await store.getData(area);
-				console.log('DEBUG THIS BITCH', res);
 				return res;
 			},
 		});

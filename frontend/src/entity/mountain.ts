@@ -5,7 +5,7 @@ export interface Mountain {
 	name: string;
 	height: number;
 	country: string;
-	region?: string;
+	region: string | null;
 	createdAt: Date;
 	updatedAt: Date;
 	groups: Group[];

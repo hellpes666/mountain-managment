@@ -6,6 +6,7 @@ import { FullNameFields } from './ui/FullNameFields';
 import { InputField } from './ui/InputField';
 import { OppositeAction } from './ui/OppositeAction';
 import type { RegisterData } from '@/types/auth';
+import { Spinner } from '@/shared/ui/Spinner';
 
 interface IAuthFormProps {
 	title: string;
@@ -14,7 +15,7 @@ interface IAuthFormProps {
 }
 
 export const AuthForm: React.FC<IAuthFormProps> = ({ title, subtitle, isRegister }) => {
-	const { register, login } = useAuthStore();
+	const { register, login, isLoading } = useAuthStore();
 	async function submitForm(formData: FormData) {
 		const data = {
 			email: formData.get('email') as string,
@@ -66,8 +67,9 @@ export const AuthForm: React.FC<IAuthFormProps> = ({ title, subtitle, isRegister
 					className="mt-2 w-full"
 					type="submit"
 					variant="secondary"
+					disabled={isLoading}
 				>
-					{isRegister ? `Зарегистрироваться` : `Войти`}
+					{isLoading ? <Spinner /> : isRegister ? `Зарегистрироваться` : `Войти`}
 				</Button>
 			</form>
 

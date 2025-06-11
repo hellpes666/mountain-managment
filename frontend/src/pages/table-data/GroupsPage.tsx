@@ -23,7 +23,7 @@ export const GroupsPage = () => {
 				<TableLayout
 					columns={groupColumns}
 					data={data ?? []}
-					baseUrl="/groups/"
+					baseUrl="/groups"
 				/>
 			)}
 		</PageLayout>

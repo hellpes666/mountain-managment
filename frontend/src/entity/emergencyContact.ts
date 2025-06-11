@@ -1,16 +1,13 @@
-import type { Climber } from "./climber";
-
 export interface EmergencyContact {
 	id: string;
 	fullName: string;
-	relationship?: Relationship;
+	relationship: Relationship | null;
 	phoneNumber: string;
-	email?: string;
+	email: string | null;
 	address: string;
 	climberId: string;
 	createdAt: Date;
 	updatedAt: Date;
-	climber: Climber;
 }
 
 export enum Relationship {

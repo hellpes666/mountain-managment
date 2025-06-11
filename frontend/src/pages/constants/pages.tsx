@@ -47,4 +47,19 @@ export const RoutesAndPagesWithSecure: {
 		secure: false,
 		page: lazy(() => import('@/pages/RegisterPage').then((module) => ({ default: module.RegisterPage }))),
 	},
+	{
+		href: RoutesEnum.ClimbersId,
+		secure: true,
+		page: lazy(() => import('../char/ClimberPage').then((module) => ({ default: module.ClimberPage }))),
+	},
+	{
+		href: RoutesEnum.MountainsId,
+		secure: true,
+		page: lazy(() => import('../char/MountainPage').then((module) => ({ default: module.MountainPage }))),
+        },
+    {
+		href: RoutesEnum.GroupsId,
+		secure: true,
+		page: lazy(() => import('../char/GroupPage').then((module) => ({ default: module.GroupPage }))),
+	},
 ];
