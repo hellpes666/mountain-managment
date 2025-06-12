@@ -13,4 +13,5 @@ module.exports = {
         '^@prisma/__generated__$': '<rootDir>/../prisma/__generated__',
         '^@prisma/__generated__/(.*)$': '<rootDir>/../prisma/__generated__/$1',
     },
+    moduleDirectories: ['node_modules', 'src'],
 };

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MountainController } from './mountain.controller';
 import { MountainService } from './mountain.service';
 import { CreateMountainDto } from './dto/create-mountain.dto';
-import { UpdateMountainDto } from './dto/update-mountain.dto';
+
 
 describe('MountainController', () => {
     let controller: MountainController;

@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '@/prisma/prisma.service';
+import { GroupService } from '@/group/group.service';
 import { CreateClimberDto } from './dto/create-climber.dto';
 import { UpdateClimberDto } from './dto/update-climber.dto';
-import { GroupService } from '@/group/group.service';
-import { PrismaService } from '@/prisma/prisma.service';
 import { Climber } from '@prisma/__generated__';
 
 @Injectable()
